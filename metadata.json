@@ -1,0 +1,14 @@
+{
+  "name": "fewbytes-elasticsearch_report",
+  "version": "0.1.0",
+  "author": "Avishai Ish-Shalom (Fewbytes)",
+  "summary": "Puppet custom report to Elasticsearch",
+  "license": "Apache 2.0",
+  "source": "https://github.com/fewbytes-puppet-show/fewbytes-elasticsearch_report",
+  "project_page": "https://github.com/fewbytes-puppet-show/fewbytes-elasticsearch_report",
+  "issues_url": "https://github.com/fewbytes-puppet-show/fewbytes-elasticsearch_report/issues",
+  "dependencies": [
+    {"name":"puppetlabs-stdlib","version_requirement":">= 1.0.0"}
+  ]
+}
+
