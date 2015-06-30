@@ -66,14 +66,14 @@ Puppet::Reports.register_report(:elasticsearch) do
 	end
 
 	def format_metrics
-		self.metrics.map do |category, m|
+		Hash[self.metrics.map do |category, m|
 			[
 				category,
-				m.values.map do |val|
+				Hash[m.values.map do |val|
 					val.values_at(0, 2)
-				end.to_h
+				end]
 			]
-		end.to_h
+		end]
 	end
 
 	def to_data_hash_recursive(obj)
@@ -86,7 +86,7 @@ Puppet::Reports.register_report(:elasticsearch) do
 		when Array
 			data_hash.map{|elmnt| to_data_hash_recursive(elmnt)}
 		when Hash
-			data_hash.map{|k, elmnt| [k, to_data_hash_recursive(elmnt)]}.to_h
+			Hash[data_hash.map{|k, elmnt| [k, to_data_hash_recursive(elmnt)]}]
 		else
 			data_hash
 		end
