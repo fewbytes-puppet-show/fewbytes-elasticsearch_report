@@ -49,7 +49,8 @@ Puppet::Reports.register_report(:elasticsearch) do
 			:run_type => self.kind,
 			:metrics => format_metrics,
 			:logs => to_data_hash_recursive(logs),
-			:resource_statuses => to_data_hash_recursive(resource_statuses),
+			:changed_resources => changed_resources,
+			:failed_resources => failed_resources,
 			:time => self.time.iso8601,
 			:transaction_uuid => self.transaction_uuid,
 			:puppet_version => self.puppet_version,
@@ -74,6 +75,18 @@ Puppet::Reports.register_report(:elasticsearch) do
 				end]
 			]
 		end]
+	end
+
+	def changed_resources
+		resource_statuses.select do |k, r_status|
+			r_status.changed
+		end.map(&:first)
+	end
+
+	def failed_resources
+		resource_statuses.select do |name, r_status|
+			r_status.failed
+		end.map(&:first)
 	end
 
 	def to_data_hash_recursive(obj)

@@ -32,6 +32,14 @@
           "dynamic": false,
           "enabled": false,
           "type": "object"
+        },
+        "failed_resources": {
+          "index": "not_analyzed",
+          "type": "string"
+        },
+        "changed_resources": {
+          "index": "not_analyzed",
+          "type": "string"
         }
       }
     }
