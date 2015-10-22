@@ -12,7 +12,9 @@ Puppet::Reports.register_report(:elasticsearch) do
 		@config = {
 			:elasticsearch_url => "http://localhost:9200/",
 			:index => "puppet-%{%Y.%m.%d}",
-			:document_type => "puppet_report"
+			:document_type => "puppet_report",
+			:read_timeout => 15,
+			:open_timeout => 5
 		}.merge(YAML.load_file(config_file))
 	end
 
@@ -24,6 +26,8 @@ Puppet::Reports.register_report(:elasticsearch) do
 		Puppet.debug("Report body: \n" + request.body)
 		request['content-type'] = 'application/json'
 		http = Net::HTTP.new(uri.host, uri.port)
+		http.open_timeout = @config[:open_timeout]
+		http.read_timeout = @config[:read_timeout]
 		response = http.request(request)
 		Puppet.debug("Submitting report to #{uri}")
 		unless response.is_a? Net::HTTPSuccess
